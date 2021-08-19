@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+	  th:fragment="layout(title, section, script, pageTitle)">
+	
+<head>
+	<title th:replace="${title}">SANTHOSH KUMAR</title>
+	<th:block th:include="admin-panel/layout/head :: head"/>
+</head>
+
+<body>
+	<!-- <div id="preloader">
+        <div class="loader"></div>
+    </div>  -->
+    
+   	<div class="page-container">
+		<!-- sidebar menu area start -->
+		<div th:replace="admin-panel/layout/menu :: menu"></div>
+		<!-- sidebar menu area end -->
+
+		<!-- main content area start -->
+		<div class="main-content">
+			<!-- page title area start -->
+			<div class="page-title-area">
+				<!-- <th:block th:replace="${section}" /> -->
+				<div class="row align-items-center">
+					<div class="col-sm-6">
+						<div class="breadcrumbs-area clearfix">
+							<!-- open/close menu -->
+							<div class="nav-btn pull-left" >
+								<span></span> 
+								<span></span> 
+								<span></span>
+							</div>
+
+							<h4 class="page-title pull-left" th:replace="${pageTitle}">Dashboard</h4>
+						</div>
+					</div>
+					<div class="col-sm-6 clearfix">
+						<div class="user-profile pull-right">
+							<h4 class="user-name dropdown-toggle" data-toggle="dropdown" >
+								<span sec:authentication="name">Username</span>
+								<i class="fa fa-angle-down"></i>
+							</h4>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" th:href="@{/logout}">Log Out</a>
+							</div>
+							<ul class="notification-area pull-right">
+								<li class="settings-btn"><i class="ti-settings"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- page title area end -->
+			
+			<div class="main-content-inner">
+				<th:block th:replace="${section}" />
+			</div>
+		</div>
+		<!-- main content area end -->
+	</div>
+	
+ 	<script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/metisMenu.min.js"></script>
+    <script src="/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="/assets/js/jquery.slicknav.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <script src="/assets/js/line-chart.js"></script>
+    <script src="/assets/js/bar-chart.js"></script>
+    <script src="/assets/js/pie-chart.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    
+    <!-- Start datatable js -->
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    
+    <th:block th:replace="${script}" />
+</body>
+
+</html>

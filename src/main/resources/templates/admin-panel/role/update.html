@@ -1,0 +1,91 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	th:replace="admin-panel/layout/layout :: layout(~{::title}, ~{::section}, ~{::script}, ~{::h4.page-title})">
+
+<title>Role Update</title>
+
+<h4 class="page-title pull-left">User Update</h4>
+
+<section>
+	<form id="role-create-form" method="POST" th:action="@{|/role/update/${id}|}" th:object="${roleUpdateDTO}">
+		<div class="list-group" style="padding: 15px;">
+	        <div class="list-group-item">
+	            <div class="form-group row mb-0">
+	                <label for="name" class="col-md-2 col-form-label">Name</label>
+	                <div class="col-md-8">
+	                    <input type="text" name="name" id="name" class="form-control" th:value="${roleUpdateVO.name}" required>
+	                </div>
+	            </div>
+	        </div>
+
+			<div class="list-group-item">
+				<div class="form-group row mb-0">
+					<label class="col-md-2 col-form-label">Admin</label>
+					<div class="col-md-8">
+						<div class="form-control-plaintext">
+							<div class="custom-control custom-checkbox" >
+								<input type="checkbox" name="admin" id="admin" class="custom-control-input" th:value="true"
+									   th:checked="${roleUpdateVO.isAdmin}">
+								<label for="admin" class="custom-control-label">Admin</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="list-group-item">
+				<div class="form-group row mb-0">
+					<label class="col-md-2 col-form-label">Privileges</label>
+					<div class="col-md-8">
+						<div class="form-control-plaintext">
+							<div class="custom-control custom-checkbox" th:each="privilege: ${roleUpdateVO.privilegeList}">
+								<input type="checkbox" th:id="'privilege_' + ${privilege.id}" name="privileges"
+									   class="custom-control-input" th:value="${privilege.id}" th:checked="${privilege.checked}">
+								<label th:attr="for='privilege_' + ${privilege.id}" class="custom-control-label"
+									   th:text="${privilege.name}">
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	        
+	        <div class="list-group-item bg-light text-left text-md-right pb-1">
+	            <button type="submit" name="_submit" class="btn btn-primary mb-2" value="redirect">Save & Back</button>
+	        </div>
+	    </div>
+	</form>
+</section>
+
+<script th:inline="javascript">
+$(document).ready( function () {
+	checkSubmitForm()
+});
+
+function checkSubmitForm() {
+    
+	$("#role-create-form").submit(function(event) {
+	    let privileges = $('input[name="privileges"]:checked').map(function() {
+	        return $(this).val()
+	    }).get().join()
+	    
+		if (checkEmpty(privileges)) {
+			alert('Must select at least one privilege.')
+			event.preventDefault();
+		}else{
+			
+		}
+	})
+}
+
+function checkEmpty(value) {
+	if(value === '' || value === null || typeof value === "undefined") {
+    	return true;
+  	}else{
+    	return false;
+  	}
+}
+
+</script>
+
+</html>

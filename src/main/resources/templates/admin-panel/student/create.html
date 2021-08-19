@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	th:replace="admin-panel/layout/layout :: layout(~{::title}, ~{::section}, ~{::script}, ~{::h4.page-title})">
+
+<title>Student Create</title>
+
+<h4 class="page-title pull-left">Student Create</h4>
+
+<section>
+	<form id="user-create-form" method="POST" th:action="@{/student/create}" th:object="${studentCreateDTO}">
+		<table>
+			<tr><td><div class="form-group">
+				<label>RollNo</label>
+				<input type="text" class="form-control"
+					   th:field="*{rollNo}" />
+			</div></td>
+			<td>
+				<div class="form-group">
+					<label>Name</label>
+					<input type="text" class="form-control"
+						   th:field="*{name}" />
+				</div>
+			</td></tr>
+		</table>
+
+
+		<div class="form-group">
+			<label>Phone</label>
+			<input type="text" class="form-control" th:field="*{phone}" />
+		</div>
+
+		<div class="form-group">
+			<label>Department</label>
+			<input type="text" class="form-control" th:field="*{department}" />
+		</div>
+
+		<div class="form-group">
+			<label>First Mid Question-1</label>
+			<input type="text" class="form-control" th:field="*{qone}" />
+		</div>
+
+		<div class="form-group">
+			<label>First Mid Question-2</label>
+			<input type="text" class="form-control" th:field="*{qtwo}" />
+		</div>
+
+		<div class="form-group">
+			<label>First Mid Question-3</label>
+			<input type="text" class="form-control" th:field="*{qthree}" />
+		</div>
+
+		<div class="form-group">
+			<label>Second Mid Question-1</label>
+			<input type="text" class="form-control" th:field="*{qfour}" />
+		</div>
+
+		<div class="form-group">
+			<label>Second Mid Question-2</label>
+			<input type="text" class="form-control" th:field="*{qfive}" />
+		</div>
+
+		<div class="form-group">
+			<label>Second Mid Question-3</label>
+			<input type="text" class="form-control" th:field="*{qsix}" />
+		</div>
+		<button type="submit" class="btn btn-primary">Save</button>
+	    </div>
+	</form>
+</section>
+
+<script>
+$(document).ready( function () {
+
+});
+
+function checkPasswordValid() {
+	$('#password, #password_confirmation').on('keyup', function () {
+	  if ($('#password').val() == $('#password_confirmation').val()) {
+	  	$('#message').html('Matching').css('color', 'green');
+	  } else {
+	    $('#message').html('Not Matching').css('color', 'red');
+	  }
+	})
+}
+
+function checkSubmitForm() {
+    
+
+}
+
+function checkEmpty(value) {
+	if(value === '' || value === null || typeof value === "undefined") {
+    	return true;
+  	}else{
+    	return false;
+  	}
+}
+
+</script>
+
+</html>

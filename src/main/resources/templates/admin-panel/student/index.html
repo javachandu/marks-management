@@ -1,0 +1,148 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  th:replace="admin-panel/layout/layout :: layout(~{::title}, ~{::section}, ~{::script}, ~{::h4.page-title})">
+
+<title>User</title>
+
+<h4 class="page-title pull-left">Student</h4>
+
+<section>
+	<div class="row mb-3">
+		<div class="col-md">
+			<h2 class="mb-0"></h2>
+		</div>
+		<div class="col-md-auto mt-2">
+			<a th:href="@{/student/create}" class="btn btn-primary">Create Student</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<!-- data table start -->
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="header-title">Student</h4>
+					<div class="data-tables">
+						<table id="user_table" class="display">
+								<thead>
+								<tr>
+									<th rowspan="2">Roll No</th>
+									<th rowspan="2">Full Name</th>
+									<th rowspan="2">Department</th>
+									<th colspan="4">First Mid Marks</th>
+									<th colspan="4">Second Mid Marks</th>
+									<!--<th rowspan="2">Edit</th>
+									<th rowspan="2">Delete</th>-->
+								</tr>
+								<tr>
+									<th>Q1</th><th>Q2</th><th>Q3</th><th>Total</th>
+									<th>Q1</th><th>Q2</th><th>Q3</th><th>Total</th>
+								</tr>
+								</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- data table end -->
+	</div>
+	<div th:replace="admin-panel/element/snackbar :: snackbar"></div>
+</section>
+
+<script>
+$(document).ready( function () {
+
+	initDatatable()
+
+	checkActionStatus()
+});
+
+function initDatatable() {
+    let readButton = '<a href="#" class="text-secondary read-button" title="Read"><i class="fa fa-eye"></i></a>'
+    let updateButton = '<a href="#" class="text-secondary update-button" title="Update"><i class="fa fa-edit"></i></a>'
+    let deleteButton = '<a href="#" class="text-secondary delete-button" title="Delete"><i class="fa fa-trash"></i></a>'
+    let defaultContentHtml = `<ul class="d-flex">
+    							<li class="mr-3">${readButton}</li>
+    							<li class="mr-3">${updateButton}</li>
+    							<li class="mr-3">${deleteButton}</li>
+    						</ul>`
+
+	let table = $('#user_table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: 'api/datatable/student',
+        columnDefs: [{ targets: -1, data: null, defaultContent: defaultContentHtml}],
+        columns: [
+                {data: 'rollNo', name: 'rollNo',orderable: false, searchable: true},
+                {data: 'name', name: 'name', orderable: true, searchable: false},
+                {data: 'department', name: 'department', orderable: true, searchable: false},
+                {data: 'qone', name: 'qone', orderable: true, searchable: false},
+                {data: 'qtwo', name: 'qtwo', orderable: true, searchable: false},
+                {data: 'qthree', name: 'rollNo',orderable: false, searchable: false},
+                {data: 'firstMidMarks', name: 'firstMidMarks', orderable: true, searchable: false},
+                {data: 'qfour', name: 'qfour', orderable: true, searchable: false},
+                {data: 'qfive', name: 'qfive', orderable: true, searchable: false},
+                {data: 'qsix', name: 'qsix', orderable: true, searchable: false},
+                {data: 'firstMidMarks', name: 'firstMidMarks', orderable: true, searchable: false},
+            ]
+      });
+
+	table.on('click', '.read-button', function () {
+	    let data = table.row($(this).parents('tr')).data();
+	    window.location.href = `student/read/${data['id']}`
+	});
+
+	table.on('click', '.update-button', function () {
+	    let data = table.row($(this).parents('tr')).data();
+	    window.location.href = `student/update/${data['id']}`
+	});
+
+	table.on('click', '.delete-button', function () {
+	    let data = table.row($(this).parents('tr')).data();
+	    formDelete(data['id'])
+
+	});
+
+	return table
+}
+
+function formDelete(id) {
+    var form = document.createElement("form");
+    var element1 = document.createElement("input");
+
+    form.method = "POST"
+    form.action = `student/delete/${id}`
+
+    document.body.appendChild(form);
+
+    form.submit();
+}
+
+function checkActionStatus() {
+	if (getUrlVars()["delete"] == "success"){
+		showSnack("Delete Student Success!", "info")
+    }else if (getUrlVars()["create"] == "success"){
+    	showSnack("Create Student Success!", "info")
+    }else if (getUrlVars()["update"] == "success"){
+    	showSnack("Update Student Success!", "info")
+    }else if (getUrlVars()["delete"] == "failure"){
+    	showSnack("Create Student Failure!", "error")
+    }else if (getUrlVars()["create"] == "failure"){
+    	showSnack("Update Student Failure!", "error")
+    }else if (getUrlVars()["update"] == "failure"){
+    	showSnack("update Student Failure!", "error")
+    }
+}
+
+function getUrlVars()
+{
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+</script>
+
+</html>

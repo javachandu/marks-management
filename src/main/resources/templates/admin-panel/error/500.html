@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>500 Error - SBAP</title>
+	<th:block th:include="admin-panel/layout/head :: head"/>
+</head>
+
+<body>
+    <!-- error area start -->
+    <div class="error-area ptb--100 text-center">
+        <div class="container">
+            <div class="error-content">
+                <h2>500</h2>
+                <p>Internal Server Error!</p>
+                <a href="/dashboard">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+    <!-- error area end -->
+
+    <script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- others plugins -->
+    <script src="/assets/js/plugins.js"></script>
+</body>
+
+</html>
