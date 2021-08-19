@@ -31,15 +31,15 @@ class DemoCommandLineRunner implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-        Optional<User> existingUser = usersRepository.findByUsername("admin");
+        Optional<User> existingUser = usersRepository.findByUsername("santhosh@admin");
         if (!existingUser.isPresent()) {
             Date date = new Date();
 
             User user = new User();
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("admin"));
+            user.setUsername("santhosh");
+            user.setPassword(passwordEncoder.encode("santhosh@123"));
             user.setName("Admin");
-            user.setEmail("test@test.com");
+            user.setEmail("santhosh@admin.com");
             user.setDisabled(false);
             user.setAccountExpired(false);
             user.setAccountLocked(false);
